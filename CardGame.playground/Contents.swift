@@ -216,17 +216,25 @@ class HighLow: CardGame {
     }
     
     func play() {
+        
+        /// Create a countdown before game start 
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
             self.time -= 1
             print("A new game is about to start in \(self.time)")
             if self.time == 0.0 {
                 timer.invalidate()
+                
+                /// Start game
                 self.cardGameDelegate?.gameDidStart(cardGame: self)
                 
+                /// Create cards for players
                 let player1Card = self.deck.drawCard()
                 let player2Card = self.deck.drawCard()
                 
+                /// Ongoing game
                 self.cardGameDelegate?.game(player1DidDraw: player1Card, player2DidDraw: player2Card)
+                
+                /// End game
                 self.cardGameDelegate?.gameDidEnd(self)
             }
         })
